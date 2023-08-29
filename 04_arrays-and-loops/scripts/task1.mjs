@@ -1,7 +1,7 @@
 import {errors} from "../errors.mjs";
 import {getMinMax} from "../helpers/get-min-and-max.mjs";
 
-export function generate(data) {
+export function getTask4_1Result(data) {
   let resultCount = 0;
 
   return data.map((subData) => {
