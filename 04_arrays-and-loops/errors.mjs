@@ -1,3 +1,4 @@
 export const errors = {
-  nEqualsM: 'n не может быть равным m',
+  nEqualsM: 'Значения n и m не могут быть равны',
+  elementNotFound: 'Элемент не найден',
 }

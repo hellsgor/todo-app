@@ -1,5 +1,6 @@
 import {getTask4_2Result} from "./scripts/task2.mjs";
 import {generate} from "./scripts/task1.mjs";
+import {getTask4_3Result} from "./scripts/task3.mjs";
 
 console.group('%cЗадача 4.1:', 'background-color: red; color: white;');
 const task4_1Data = [
@@ -16,4 +17,7 @@ const task4_2Data = [5, 7, 3];
 const task4_2Result = getTask4_2Result(task4_2Data);
 console.groupEnd();
 
-
+console.group('%cЗадача 4.3:', 'background-color: red; color: white;');
+const task4_3Data = [3, 1, 7];
+const task4_3Result = getTask4_3Result(task4_3Data, task4_2Result);
+console.groupEnd();
