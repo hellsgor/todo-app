@@ -7,6 +7,7 @@ import {getTask5_3Result} from "./scripts/task3.mjs";
 console.group('%cЗадача 5.1:', 'background-color: red; color: white;');
 const task5_1Data = [1998, 1991, 2007];
 const task5_1Result = getTask5_1Result(task5_1Data);
+console.log('Массив результатов (в виде чисел): ', task5_1Result);
 console.groupEnd();
 
 console.group('%cЗадача 5.2:', 'background-color: red; color: white;');

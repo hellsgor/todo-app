@@ -1,7 +1,7 @@
 export function getTask5_3Result(arrays) {
   return arrays.map((array, idx) => {
     const sorted = arrSort(array);
-    console.log(`Отсортированный массив ${idx}: `, sorted);
+    console.log(`Отсортированный массив ${idx + 1}: `, sorted);
     return sorted;
   })
 }
