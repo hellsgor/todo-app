@@ -1,20 +1,26 @@
 // Обязательная часть задания
-let user1={
+let user1 = {
   name: 'Игорь',
   age: 17
 }
 
-let user2={
+let user2 = {
   name: 'Оля',
   age: 21
 }
 
-function getOlderUser(userOne, userTwo){
-  // Здесь решение задачи
+function getOlderUser(userOne, userTwo) {
+  if (userOne.age === userTwo.age) {
+    return `${userOne.name} и ${userTwo.name} ровесники`;
+  } else if (userOne.age > userTwo.age) {
+    return userOne.name;
+  } else {
+    return userTwo.name;
+  }
 }
 
 let result = getOlderUser(user1, user2)
-console.log('Старший пользователь:',result);
+console.log('Старший пользователь:', result);
 
 
 // // Не обязательная часть задания
