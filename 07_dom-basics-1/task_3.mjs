@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
   ]
 
   function createStudentCard(student) {
-    const card = createElement('div', 'student-card');
+    const card = createElement('li', 'student-card');
     card.append(createElement('h2', 'student-card__name', student.name));
     card.append(createElement('span', 'student-card__age', student.age, 'год', 'года', 'лет'));
     return card;
