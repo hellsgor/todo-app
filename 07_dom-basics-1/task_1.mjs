@@ -1,12 +1,7 @@
+import {createElement} from './utils/create-element.mjs';
+
 const name = 'Игорь';
 const age = 17;
-
-function createElement(tagName, className, content = '') {
-  const element = document.createElement(tagName);
-  element.classList.add(className);
-  element.textContent = content;
-  return element;
-}
 
 function createStudentCard(studentName, studentAge) {
   const card = createElement('div', 'student-card');
