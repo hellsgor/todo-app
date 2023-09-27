@@ -12,11 +12,21 @@
     const button = document.createElement('button');
 
     form.classList.add('input-group', 'mb-3');
+
     input.classList.add('form-control');
     input.placeholder = 'Введите название нового дела';
+    input.addEventListener('input', () => {
+      if (input.value.trim()) {
+        button.removeAttribute('disabled');
+      } else {
+        button.setAttribute('disabled', 'true');
+      }
+    });
+
     buttonWrapper.classList.add('input-group-append');
     button.classList.add('btn', 'btn-primary');
     button.textContent = 'Добавить дело';
+    button.setAttribute('disabled', 'true');
 
     buttonWrapper.append(button);
     form.append(input);
@@ -97,6 +107,7 @@
       todoList.append(todoItem.item);
 
       todoItemForm.input.value = '';
+      todoItemForm.button.setAttribute('disabled', 'true');
     });
   }
 
