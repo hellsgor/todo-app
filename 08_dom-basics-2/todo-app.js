@@ -35,13 +35,14 @@
     return list;
   }
 
-  function createTodoItem(name) {
+  function createTodoItem({ name, done }) {
     const item = document.createElement('li');
     const buttonGroup = document.createElement('div');
     const doneButton = document.createElement('button');
     const deleteButton = document.createElement('button');
 
     item.classList.add('list-group-item', 'd-flex', 'justify-content-between', 'align-items-center');
+    if (done) item.classList.add('list-group-item-success');
     item.textContent = name;
 
     buttonGroup.classList.add('btn-group', 'btn-group-sm');
@@ -79,7 +80,10 @@
         return;
       }
 
-      const todoItem = createTodoItem(todoItemForm.input.value);
+      const todoItem = createTodoItem({
+        name: todoItemForm.input.value,
+        done: false,
+      });
 
       todoItem.doneButton.addEventListener('click', () => {
         todoItem.item.classList.toggle('list-group-item-success');
