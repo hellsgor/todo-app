@@ -22,8 +22,6 @@
     form.append(input);
     form.append(buttonWrapper);
 
-    console.log();
-
     return {
       form,
       input,
@@ -63,10 +61,10 @@
     };
   }
 
-  document.addEventListener('DOMContentLoaded', () => {
-    const container = document.getElementById('todo-app');
+  function createTodoApp(containerName, title) {
+    const container = document.getElementById(containerName);
 
-    const todoAppTitle = createAppTitle('Список дел');
+    const todoAppTitle = createAppTitle(title);
     const todoItemForm = createTodoItemForm();
     const todoList = createTodoList();
 
@@ -96,5 +94,7 @@
 
       todoItemForm.input.value = '';
     });
-  });
+  }
+
+  window.createTodoApp = createTodoApp;
 }());
