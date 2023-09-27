@@ -59,17 +59,9 @@
 
     doneButton.classList.add('btn', 'btn-success');
     doneButton.textContent = 'Готово';
-    doneButton.addEventListener('click', () => {
-      item.classList.toggle('list-group-item-success');
-    });
 
     deleteButton.classList.add('btn', 'btn-danger');
     deleteButton.textContent = 'Удалить';
-    deleteButton.addEventListener('click', () => {
-      if (window.confirm('Вы уверены?')) {
-        item.remove();
-      }
-    });
 
     buttonGroup.append(doneButton);
     buttonGroup.append(deleteButton);
@@ -98,7 +90,7 @@
     const todoAppTitle = createAppTitle(title);
     const todoItemForm = createTodoItemForm();
     const todoList = createTodoList();
-    const todosArray = [];
+    let todosArray = [];
 
     container.append(todoAppTitle);
     container.append(todoItemForm.form);
@@ -123,9 +115,26 @@
         done: false,
         id: currentID,
       });
+
+      todoItem.doneButton.addEventListener('click', () => {
+        todoItem.item.classList.toggle('list-group-item-success');
+        const currentTodoId = Number(todoItem.item.dataset.todoId);
+        const idx = todosArray.findIndex((todo) => todo.id === currentTodoId);
+        todosArray[idx].done = !todosArray[idx].done;
+        console.log(todosArray);
+      });
+
+      todoItem.deleteButton.addEventListener('click', () => {
+        if (window.confirm('Вы уверены?')) {
+          todosArray = todosArray
+            .filter((todo) => todo.id !== Number(todoItem.item.dataset.todoId));
+          todoItem.item.remove();
+          console.log(todosArray);
+        }
+      });
+
       todoList.append(todoItem.item);
 
-      console.log(todoItem);
       console.log(todosArray);
 
       todoItemForm.input.value = '';
