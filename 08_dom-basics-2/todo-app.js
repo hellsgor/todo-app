@@ -56,10 +56,20 @@
     item.textContent = name;
 
     buttonGroup.classList.add('btn-group', 'btn-group-sm');
+
     doneButton.classList.add('btn', 'btn-success');
     doneButton.textContent = 'Готово';
+    doneButton.addEventListener('click', () => {
+      item.classList.toggle('list-group-item-success');
+    });
+
     deleteButton.classList.add('btn', 'btn-danger');
     deleteButton.textContent = 'Удалить';
+    deleteButton.addEventListener('click', () => {
+      if (window.confirm('Вы уверены?')) {
+        item.remove();
+      }
+    });
 
     buttonGroup.append(doneButton);
     buttonGroup.append(deleteButton);
@@ -72,12 +82,23 @@
     };
   }
 
+  function generateTodoItemID(todos) {
+    let maxID = 0;
+    todos.forEach((todosItem) => {
+      if (todosItem.id > maxID) {
+        maxID = todosItem.id;
+      }
+    });
+    return ++maxID;
+  }
+
   function createTodoApp(containerName, title) {
     const container = document.getElementById(containerName);
 
     const todoAppTitle = createAppTitle(title);
     const todoItemForm = createTodoItemForm();
     const todoList = createTodoList();
+    const todosArray = [];
 
     container.append(todoAppTitle);
     container.append(todoItemForm.form);
@@ -95,16 +116,17 @@
         done: false,
       });
 
-      todoItem.doneButton.addEventListener('click', () => {
-        todoItem.item.classList.toggle('list-group-item-success');
+      const currentID = generateTodoItemID(todosArray);
+      todoItem.item.dataset.todoId = currentID;
+      todosArray.push({
+        name: todoItemForm.input.value,
+        done: false,
+        id: currentID,
       });
-      todoItem.deleteButton.addEventListener('click', () => {
-        if (window.confirm('Вы уверены?')) {
-          todoItem.item.remove();
-        }
-      });
-
       todoList.append(todoItem.item);
+
+      console.log(todoItem);
+      console.log(todosArray);
 
       todoItemForm.input.value = '';
       todoItemForm.button.setAttribute('disabled', 'true');
