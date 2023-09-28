@@ -1,4 +1,14 @@
-(function () {
+((() => {
+  const MAINKEY = 'todos';
+
+  function getStoreData() {
+    return JSON.parse(localStorage.getItem(MAINKEY));
+  }
+
+  function setStoreData(data) {
+    localStorage.setItem(MAINKEY, JSON.stringify(data));
+  }
+
   function createAppTitle(title) {
     const appTitle = document.createElement('h2');
     appTitle.innerHTML = title;
@@ -74,23 +84,69 @@
     };
   }
 
-  function generateTodoItemID(todos) {
+  function generateTodoItemID(store, key) {
     let maxID = 0;
-    todos.forEach((todosItem) => {
-      if (todosItem.id > maxID) {
-        maxID = todosItem.id;
-      }
-    });
+    if (store[key] && store[key].length) {
+      store[key].forEach((todosItem) => {
+        if (todosItem.id > maxID) {
+          maxID = todosItem.id;
+        }
+      });
+    }
     return ++maxID;
   }
 
-  function createTodoApp(containerName, title) {
+  function changeTodoStatus(todoItem, store, key) {
+    todoItem.item.classList.toggle('list-group-item-success');
+
+    const currentTodoId = Number(todoItem.item.dataset.todoId);
+
+    const idx = store[key].findIndex((todo) => todo.id === currentTodoId);
+    store[key][idx].done = !store[key][idx].done;
+    setStoreData(store);
+  }
+
+  function deleteTodo(todoItem, store, key) {
+    if (window.confirm('Вы уверены?')) {
+      todoItem.item.remove();
+
+      store[key] = store[key].filter((todo) => todo.id !== Number(todoItem.item.dataset.todoId));
+      setStoreData(store);
+    }
+  }
+
+  function addTodosFromStore(store, key, targetList) {
+    store[key].forEach((todo) => {
+      const todoItem = createTodoItem({
+        name: todo.name,
+        done: todo.done,
+      });
+      todoItem.item.dataset.todoId = todo.id;
+      todoItem.doneButton.addEventListener('click', () => changeTodoStatus(todoItem, store, key));
+      todoItem.deleteButton.addEventListener('click', () => deleteTodo(todoItem, store, key));
+      targetList.append(todoItem.item);
+    });
+  }
+
+  function getTodos(todoList, key) {
+    if (!getStoreData()) {
+      return {};
+    }
+    if (!getStoreData()[key]) {
+      return getStoreData();
+    }
+    addTodosFromStore(getStoreData(), key, todoList);
+    return getStoreData();
+  }
+
+  function createTodoApp(containerName, title, key) {
     const container = document.getElementById(containerName);
 
     const todoAppTitle = createAppTitle(title);
     const todoItemForm = createTodoItemForm();
     const todoList = createTodoList();
-    let todosArray = [];
+
+    const store = getTodos(todoList, key);
 
     container.append(todoAppTitle);
     container.append(todoItemForm.form);
@@ -108,34 +164,24 @@
         done: false,
       });
 
-      const currentID = generateTodoItemID(todosArray);
+      const currentID = generateTodoItemID(store, key);
       todoItem.item.dataset.todoId = currentID;
-      todosArray.push({
+      const newTodo = {
         name: todoItemForm.input.value,
         done: false,
         id: currentID,
-      });
+      };
+      if (store[key]) {
+        store[key].push(newTodo);
+      } else {
+        store[key] = [newTodo];
+      }
 
-      todoItem.doneButton.addEventListener('click', () => {
-        todoItem.item.classList.toggle('list-group-item-success');
-        const currentTodoId = Number(todoItem.item.dataset.todoId);
-        const idx = todosArray.findIndex((todo) => todo.id === currentTodoId);
-        todosArray[idx].done = !todosArray[idx].done;
-        console.log(todosArray);
-      });
-
-      todoItem.deleteButton.addEventListener('click', () => {
-        if (window.confirm('Вы уверены?')) {
-          todosArray = todosArray
-            .filter((todo) => todo.id !== Number(todoItem.item.dataset.todoId));
-          todoItem.item.remove();
-          console.log(todosArray);
-        }
-      });
+      todoItem.doneButton.addEventListener('click', () => changeTodoStatus(todoItem, store, key));
+      todoItem.deleteButton.addEventListener('click', () => deleteTodo(todoItem, store, key));
 
       todoList.append(todoItem.item);
-
-      console.log(todosArray);
+      setStoreData(store);
 
       todoItemForm.input.value = '';
       todoItemForm.button.setAttribute('disabled', 'true');
@@ -143,4 +189,4 @@
   }
 
   window.createTodoApp = createTodoApp;
-}());
+})());
