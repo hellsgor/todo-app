@@ -1,8 +1,8 @@
 {
   "private": true,
   "scripts": {
-    "lint": "eslint ./",
-    "lint:report": "eslint --format gitlab ./"
+    "lint": "08_dom-basics-2/node_modules/.bin/eslint ./",
+    "lint:report": "08_dom-basics-2/node_modules/.bin/eslint --format gitlab ./"
   },
   "author": "",
   "license": "ISC",
