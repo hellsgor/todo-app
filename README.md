@@ -12,6 +12,7 @@ Skillbox.
 - case deletion;
 - cases and users are stored in the browser's LocalStorage.
 
+---------
 
 - добавление дел в список;
 - изменение статуса дела;
@@ -24,6 +25,7 @@ Skillbox.
 - learn to create web applications using the example of the TODO application;
 - study the work of localStorage.
 
+---------
 
 - самостоятельно получить опыт работы с событиями и изменением существующего
   кода;
